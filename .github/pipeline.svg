@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="423px" preserveAspectRatio="none" style="width:535px;height:423px;" version="1.1" viewBox="0 0 535 423" width="535px" zoomAndPan="magnify"><defs><filter height="300%" id="fbu9ivll5veo1" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="70" x="231.5" y="26.708">pipeline</text><ellipse cx="267" cy="40.9531" fill="#000000" filter="url(#fbu9ivll5veo1)" rx="10" ry="10" style="stroke: none; stroke-width: 1.0;"/><rect fill="#FEFECE" filter="url(#fbu9ivll5veo1)" height="33.9688" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="139" x="197.5" y="70.9531"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="119" x="207.5" y="92.0918">Builder-params-ETL</text><rect fill="#FEFECE" filter="url(#fbu9ivll5veo1)" height="33.9688" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="150" x="192" y="124.9219"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="130" x="202" y="146.0605">Handler-fetch-data-1</text><rect fill="#000000" filter="url(#fbu9ivll5veo1)" height="6" rx="2.5" ry="2.5" style="stroke: #000000; stroke-width: 1.0;" width="514" x="10" y="178.8906"/><rect fill="#FEFECE" filter="url(#fbu9ivll5veo1)" height="33.9688" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="150" x="24" y="204.8906"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="130" x="34" y="226.0293">Handler-fetch-data-2</text><rect fill="#FEFECE" filter="url(#fbu9ivll5veo1)" height="33.9688" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="130" x="202" y="204.8906"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="110" x="212" y="226.0293">Builder-fetch-conf</text><rect fill="#FEFECE" filter="url(#fbu9ivll5veo1)" height="33.9688" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="150" x="360" y="204.8906"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="130" x="370" y="226.0293">Handler-fetch-data-3</text><rect fill="#000000" filter="url(#fbu9ivll5veo1)" height="6" rx="2.5" ry="2.5" style="stroke: #000000; stroke-width: 1.0;" width="514" x="10" y="258.8594"/><rect fill="#FEFECE" filter="url(#fbu9ivll5veo1)" height="33.9688" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="155" x="189.5" y="284.8594"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="135" x="199.5" y="305.998">Builder-biz-expression</text><rect fill="#FEFECE" filter="url(#fbu9ivll5veo1)" height="33.9688" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="153" x="190.5" y="338.8281"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="133" x="200.5" y="359.9668">Handler-json-marshal</text><ellipse cx="267" cy="402.7969" fill="none" filter="url(#fbu9ivll5veo1)" rx="10" ry="10" style="stroke: #000000; stroke-width: 1.0;"/><ellipse cx="267.5" cy="403.2969" fill="#000000" filter="url(#fbu9ivll5veo1)" rx="6" ry="6" style="stroke: none; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="267" x2="267" y1="50.9531" y2="70.9531"/><polygon fill="#A80036" points="263,60.9531,267,70.9531,271,60.9531,267,64.9531" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="267" x2="267" y1="104.9219" y2="124.9219"/><polygon fill="#A80036" points="263,114.9219,267,124.9219,271,114.9219,267,118.9219" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="99" x2="99" y1="184.8906" y2="204.8906"/><polygon fill="#A80036" points="95,194.8906,99,204.8906,103,194.8906,99,198.8906" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="267" x2="267" y1="184.8906" y2="204.8906"/><polygon fill="#A80036" points="263,194.8906,267,204.8906,271,194.8906,267,198.8906" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="435" x2="435" y1="184.8906" y2="204.8906"/><polygon fill="#A80036" points="431,194.8906,435,204.8906,439,194.8906,435,198.8906" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="99" x2="99" y1="238.8594" y2="258.8594"/><polygon fill="#A80036" points="95,248.8594,99,258.8594,103,248.8594,99,252.8594" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="267" x2="267" y1="238.8594" y2="258.8594"/><polygon fill="#A80036" points="263,248.8594,267,258.8594,271,248.8594,267,252.8594" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="435" x2="435" y1="238.8594" y2="258.8594"/><polygon fill="#A80036" points="431,248.8594,435,258.8594,439,248.8594,435,252.8594" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="267" x2="267" y1="158.8906" y2="178.8906"/><polygon fill="#A80036" points="263,168.8906,267,178.8906,271,168.8906,267,172.8906" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="267" x2="267" y1="264.8594" y2="284.8594"/><polygon fill="#A80036" points="263,274.8594,267,284.8594,271,274.8594,267,278.8594" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="267" x2="267" y1="318.8281" y2="338.8281"/><polygon fill="#A80036" points="263,328.8281,267,338.8281,271,328.8281,267,332.8281" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="267" x2="267" y1="372.7969" y2="392.7969"/><polygon fill="#A80036" points="263,382.7969,267,392.7969,271,382.7969,267,386.7969" style="stroke: #A80036; stroke-width: 1.0;"/><!--
+@startuml
+title pipeline
+
+
+start
+:Builder-params-ETL;
+
+:Handler-fetch-data-1;
+
+  fork
+    :Handler-fetch-data-2;
+  fork again
+    :Builder-fetch-conf;
+  fork again
+    :Handler-fetch-data-3;
+  end fork
+
+:Builder-biz-expression;
+
+:Handler-json-marshal;
+
+stop
+@enduml
+
+PlantUML version 1.2018.15beta2(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.7.0_25-b15
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
