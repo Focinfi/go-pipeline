@@ -30,6 +30,15 @@ func BuildHandler(id string, name string, confJSON string) (pipeline.Handler, er
 	return builder.BuildHandlerByJSON(id, confJSON)
 }
 
+// GetBuilderNames returns a list of all builders
+func GetBuilderNames() []string {
+	names := make([]string, 0, len(all))
+	for name := range all {
+		names = append(names, name)
+	}
+	return names
+}
+
 // GetBuilderOK get the builder for the given name
 func GetBuilderOK(name string) (pipeline.HandlerBuilder, bool) {
 	b, ok := all[name]

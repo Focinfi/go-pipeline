@@ -74,3 +74,11 @@ func TestBuildHandler(t *testing.T) {
 		})
 	}
 }
+
+func TestGetBuilderNames(t *testing.T) {
+	got := GetBuilderNames()
+	want := []string{BuilderCalcExpr, BuilderETLJSONExtractor}
+	if len(got) != len(want) {
+		t.Errorf("names: want=%v, got=%v", want, got)
+	}
+}

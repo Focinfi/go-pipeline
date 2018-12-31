@@ -8,7 +8,7 @@ import (
 
 	"github.com/Focinfi/pipeline"
 	"github.com/tidwall/gjson"
-	validator "gopkg.in/go-playground/validator.v9"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 var validatorIns = validator.New()
