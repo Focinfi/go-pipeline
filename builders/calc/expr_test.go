@@ -91,8 +91,8 @@ func TestExpr_Handle(t *testing.T) {
 		t.Run(item.caseName, func(t *testing.T) {
 			h := &Expr{Expr: item.expr}
 			resp, err := h.Handle(context.Background(), pipeline.Args{InValue: item.inValue})
-			if err != nil {
-				if item.hasErr {
+			if item.hasErr {
+				if err != nil {
 					t.Log(err)
 				} else {
 					t.Errorf("has err: want=%v, got=%v", item.hasErr, err)
