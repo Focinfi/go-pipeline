@@ -61,7 +61,7 @@ func (handlers Handlers) Handle(ctx context.Context, args pipeline.Args) (resp *
 			idx int
 			val interface{}
 			err error
-		})
+		}, len(handlers))
 		respData = make([]interface{}, len(handlers))
 	)
 	// set wait number
@@ -70,9 +70,7 @@ func (handlers Handlers) Handle(ctx context.Context, args pipeline.Args) (resp *
 	// start goroutines to handle
 	for i, h := range handlers {
 		go func(index int, handler pipeline.Option) {
-			if fatalErr != nil {
-				return
-			}
+			defer wg.Done()
 
 			hRespChan := make(chan struct {
 				val interface{}
@@ -121,31 +119,26 @@ func (handlers Handlers) Handle(ctx context.Context, args pipeline.Args) (resp *
 		}(i, h)
 	}
 
-	// receive responses of handlers
-	go func() {
-		for {
-			resp := <-hValChan
-			func() {
-				defer wg.Done()
-				if resp.err != nil {
-					item := handlers[resp.idx]
-					if item.Required {
-						fatalErr = resp.err
-						return
-					}
-
-					log.Printf("handle err: handler_id=%v, err=%v", item.ID, err)
-					respData[resp.idx] = item.DefaultValue
-					return
-				}
-
-				respData[resp.idx] = resp.val
-			}()
-		}
-	}()
-
 	// wait for response
 	wg.Wait()
+	close(hValChan)
+
+	// handle responses
+	for resp := range hValChan {
+		if resp.err != nil {
+			item := handlers[resp.idx]
+			if item.Required {
+				fatalErr = resp.err
+				break
+			}
+
+			log.Printf("handle err: handler_id=%v, err=%v", item.ID, err)
+			respData[resp.idx] = item.DefaultValue
+			continue
+		}
+
+		respData[resp.idx] = resp.val
+	}
 
 	// build response
 	return &pipeline.Resp{
