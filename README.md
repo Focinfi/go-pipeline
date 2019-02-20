@@ -1,4 +1,4 @@
-pipeline
+go-pipeline
 ------
 
 Configurable data processing in golang. 
