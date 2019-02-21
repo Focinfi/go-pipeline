@@ -66,12 +66,10 @@ type HandlerBuilderGetter interface {
 }
 
 // MapHandlerBuilderGetter wraps a map[string]HandlerBuilder as a MapHandlerBuilderGetter.
-type MapHandlerBuilderGetter struct {
-	builders map[string]HandlerBuilder
-}
+type MapHandlerBuilderGetter map[string]HandlerBuilder
 
 func (m MapHandlerBuilderGetter) GetOK(id string) (HandlerBuilder, bool) {
-	builder, ok := m.builders[id]
+	builder, ok := m[id]
 	return builder, ok
 }
 
@@ -80,11 +78,9 @@ type HandlerGetter interface {
 }
 
 // MapHandlerGetter wraps a map[string]Handler as a MapHandlerGetter.
-type MapHandlerGetter struct {
-	handlers map[string]Handler
-}
+type MapHandlerGetter map[string]Handler
 
 func (m MapHandlerGetter) GetOK(name string) (Handler, bool) {
-	handler, ok := m.handlers[name]
+	handler, ok := m[name]
 	return handler, ok
 }

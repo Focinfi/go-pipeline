@@ -111,7 +111,7 @@ func TestNewSinglePipe(t *testing.T) {
 					Required:     true,
 					RefHandlerID: "delay_1000",
 				},
-				Handler: exampleHandlerGetter.handlers["delay_1000"],
+				Handler: exampleHandlerGetter["delay_1000"],
 			},
 		},
 		{
@@ -134,7 +134,7 @@ func TestNewSinglePipe(t *testing.T) {
 						"delay": 1000,
 					},
 				},
-				Handler: exampleHandlerBuilderGetter.builders["delay"].Build(map[string]interface{}{
+				Handler: exampleHandlerBuilderGetter["delay"].Build(map[string]interface{}{
 					"delay": 1000,
 				}),
 			},

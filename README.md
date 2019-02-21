@@ -6,7 +6,7 @@ Configurable data processing in golang.
 
 ### Install
 ```bash
-go get github.com/Focinfi/pipeline
+go get github.com/Focinfi/go-pipeline
 ```
 
 ### Processing Flow
