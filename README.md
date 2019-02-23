@@ -1,5 +1,6 @@
 go-pipeline
 ------
+[![Go Report Card](https://goreportcard.com/badge/github.com/Focinfi/go-pipeline)](https://goreportcard.com/report/github.com/Focinfi/go-pipeline)
 
 Configurable data processing in golang. 
 

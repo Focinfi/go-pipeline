@@ -1,0 +1,23 @@
+language: go
+sudo: false 
+
+notifications: 
+  email:
+    recipients:
+      - focinfi@gmail.com
+  on_success: change
+  on_failure: always
+
+go:
+  - 1.9.0
+  - 1.10.0
+  - 1.11.0
+
+install:
+  - go get github.com/nsf/jsondiff
+
+script:
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
