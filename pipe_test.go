@@ -2,6 +2,7 @@ package pipeline
 
 import (
 	"context"
+	"reflect"
 	"testing"
 )
 
@@ -86,7 +87,7 @@ func TestNewSinglePipe(t *testing.T) {
 				Required:     true,
 				RefHandlerID: "not_found",
 			},
-			err: ErrRefHandlerNotFound,
+			err: ErrRefHandlerNotFound("not_found"),
 		},
 		{
 			caseName: "handler builder name not found",
@@ -95,7 +96,7 @@ func TestNewSinglePipe(t *testing.T) {
 				Required:           true,
 				HandlerBuilderName: "not_found",
 			},
-			err: ErrHandlerBuilderNotFound,
+			err: ErrHandlerBuilderNotFound("not_found"),
 		},
 		{
 			caseName: "normal by handler builder",
@@ -144,8 +145,8 @@ func TestNewSinglePipe(t *testing.T) {
 	for _, item := range tt {
 		t.Run(item.caseName, func(t *testing.T) {
 			pipe, err := NewSinglePipe(item.pc, exampleHandlerBuilderGetter, exampleHandlerGetter)
-			if item.err != nil {
-				if err != item.err {
+			if !reflect.DeepEqual(item.err, nil) {
+				if !reflect.DeepEqual(err, item.err) {
 					t.Errorf("err: want=%v, got=%v", item.err, err)
 				}
 				return
@@ -245,6 +246,7 @@ func TestSinglePipe_Handle(t *testing.T) {
 		{
 			caseName: "non-required but timeout",
 			pc: PipeConf{
+				Desc:         "slow",
 				Timeout:      500,
 				Required:     false,
 				DefaultData:  -1,
@@ -252,7 +254,7 @@ func TestSinglePipe_Handle(t *testing.T) {
 			},
 			res: HandleRes{
 				Status:  HandleStatusTimeout,
-				Message: ErrHandleTimeout.Error(),
+				Message: ErrHandleTimeout("slow", 500).Error(),
 				Data:    -1,
 			},
 			hasErr: false,
@@ -309,5 +311,20 @@ func TestSinglePipe_Handle(t *testing.T) {
 				t.Error("res diff:\n", text)
 			}
 		})
+	}
+}
+
+func TestSinglePipe_Handle_Nil_Req(t *testing.T) {
+	conf := PipeConf{
+		Timeout:      20,
+		Required:     true,
+		RefHandlerID: "delay_10",
+	}
+	pipe, err := NewSinglePipe(conf, nil, exampleHandlerGetter)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := pipe.Handle(context.Background(), nil); err != nil {
+		t.Errorf("want nil error, got: %v", err)
 	}
 }

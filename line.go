@@ -29,12 +29,13 @@ func (l Line) HandleVerbosely(ctx context.Context, reqRes *HandleRes) (respReses
 
 	for _, pipe := range l.Pipes {
 		respRes, err = pipe.Handle(ctx, respRes)
-		if copied, err := respRes.Copy(); err != nil {
-			return respReses, err
-		} else {
-			respReses = append(respReses, *copied)
+		if respRes != nil {
+			if copied, err := respRes.Copy(); err != nil {
+				return respReses, err
+			} else {
+				respReses = append(respReses, *copied)
+			}
 		}
-
 		if err != nil {
 			return respReses, err
 		}

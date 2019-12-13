@@ -2,7 +2,6 @@ package pipeline
 
 import (
 	"context"
-	"errors"
 	"time"
 )
 
@@ -11,14 +10,6 @@ type PipeType string
 const (
 	PipeTypeSingle   = "single"
 	PipeTypeParallel = "parallel"
-)
-
-var (
-	ErrRefHandlerNotFound                   = errors.New("ref handler not found")
-	ErrHandlerBuilderNotFound               = errors.New("handler builder not found")
-	ErrHandleTimeout                        = errors.New("handle timeout")
-	ErrPipeConfTimeoutLessThanOrEqualToZero = errors.New("timeout less than or equal to 0")
-	ErrPipeConfNonRequiredNilDefaultData    = errors.New("non-required pipe need default data")
 )
 
 // PipeConf used to create a new Pipe.
@@ -78,7 +69,7 @@ func NewSinglePipe(conf PipeConf, handlerBuilders HandlerBuilderGetter, handlers
 
 	if conf.RefHandlerID != "" {
 		if handler, ok := handlers.GetOK(conf.RefHandlerID); !ok {
-			return nil, ErrRefHandlerNotFound
+			return nil, ErrRefHandlerNotFound(conf.RefHandlerID)
 		} else {
 			pipe.Handler = handler
 			return pipe, nil
@@ -87,7 +78,7 @@ func NewSinglePipe(conf PipeConf, handlerBuilders HandlerBuilderGetter, handlers
 
 	builder, ok := handlerBuilders.GetOK(conf.HandlerBuilderName)
 	if !ok {
-		return nil, ErrHandlerBuilderNotFound
+		return nil, ErrHandlerBuilderNotFound(conf.HandlerBuilderName)
 	}
 	pipe.Handler = builder.Build(conf.HandlerBuilderConf)
 
@@ -112,7 +103,6 @@ func NewParallelPipe(confs []PipeConf, handlerBuilders HandlerBuilderGetter, han
 // Handles the given reqRes, set timeout for single pipe, calls Handler.Handle directly for a parallel pipe.
 // Returns non-nil err when timeout or failed for a pipe which pipe.Conf.Required is true,
 // otherwise returns nil err and use the pipe.Conf.DefaultData.
-//
 func (pipe Pipe) Handle(ctx context.Context, reqRes *HandleRes) (respRes *HandleRes, err error) {
 	if pipe.Type == PipeTypeParallel {
 		return pipe.Handler.Handle(ctx, reqRes)
@@ -135,14 +125,14 @@ func (pipe Pipe) Handle(ctx context.Context, reqRes *HandleRes) (respRes *Handle
 		err = resp.err
 		respRes = resp.res
 	case <-time.After(time.Millisecond * time.Duration(pipe.Conf.Timeout)):
-		err = ErrHandleTimeout
+		err = ErrHandleTimeout(pipe.Conf.Desc, pipe.Conf.Timeout)
 	}
 
 	// assign status
 	status := HandleStatusOK
 	if err != nil {
 		status = HandleStatusFailed
-		if err == ErrHandleTimeout {
+		if e, ok := err.(Error); ok && e.Is(ErrorTypeHandleTimeout) {
 			status = HandleStatusTimeout
 		}
 	}
@@ -166,6 +156,9 @@ func (pipe Pipe) Handle(ctx context.Context, reqRes *HandleRes) (respRes *Handle
 	}
 
 	// ok
+	if respRes == nil {
+		respRes = &HandleRes{}
+	}
 	respRes.Status = status
 	return respRes, nil
 }

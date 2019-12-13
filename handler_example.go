@@ -15,6 +15,9 @@ var exampleHandlerBuilderGetter MapHandlerBuilderGetter = map[string]HandlerBuil
 }
 
 var exampleHandlerGetter MapHandlerGetter = map[string]Handler{
+	"delay_10": handlerBuilderDelay.Build(map[string]interface{}{
+		"delay": time.Millisecond * 10,
+	}),
 	"delay_1000": handlerBuilderDelay.Build(map[string]interface{}{
 		"delay": time.Millisecond * 1000,
 	}),

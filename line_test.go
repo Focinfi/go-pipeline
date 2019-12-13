@@ -41,6 +41,7 @@ var testFailedJSONConf = `
             "required":true
         },
         {
+			"desc": "slow",
             "ref_handler_id":"delay_1000",
             "timeout":200,
             "required":true
@@ -131,7 +132,7 @@ func TestLine_Handle(t *testing.T) {
 			res: HandleRes{
 				Status: HandleStatusTimeout,
 			},
-			err: ErrHandleTimeout,
+			err: ErrHandleTimeout("slow", 200),
 		},
 	}
 
