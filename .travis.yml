@@ -12,6 +12,8 @@ go: stable
 
 before_install:
   - go get -t -v ./...
+  - sudo apt-get update
+  - sudo apt-get -y install xclip notify-send
 
 script:
   - go test -race -coverprofile=coverage.txt -covermode=atomic
