@@ -135,9 +135,7 @@ func TestNewSinglePipe(t *testing.T) {
 						"delay": 1000,
 					},
 				},
-				Handler: exampleHandlerBuilderGetter["delay"].Build(map[string]interface{}{
-					"delay": 1000,
-				}),
+				Handler: delay1000,
 			},
 		},
 	}

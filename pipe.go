@@ -80,8 +80,11 @@ func NewSinglePipe(conf PipeConf, handlerBuilders HandlerBuilderGetter, handlers
 	if !ok {
 		return nil, ErrHandlerBuilderNotFound(conf.HandlerBuilderName)
 	}
-	pipe.Handler = builder.Build(conf.HandlerBuilderConf)
-
+	handler, err := builder.Build(conf.HandlerBuilderConf)
+	if err != nil {
+		return nil, ErrBuildHandlerFailed(conf.HandlerBuilderName, err)
+	}
+	pipe.Handler = handler
 	return pipe, nil
 }
 
@@ -139,10 +142,11 @@ func (pipe Pipe) Handle(ctx context.Context, reqRes *HandleRes) (respRes *Handle
 
 	// fatal when required and non-nil err
 	if pipe.Conf.Required && err != nil {
+		e := ErrHandleFailed(pipe.Conf.Desc, err)
 		return &HandleRes{
 			Status:  status,
-			Message: err.Error(),
-		}, err
+			Message: e.Error(),
+		}, e
 	}
 
 	// use default value when non-required and non-nil err

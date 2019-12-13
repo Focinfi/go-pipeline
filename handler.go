@@ -49,15 +49,15 @@ func (f HandlerFunc) Handle(ctx context.Context, reqRes *HandleRes) (respRes *Ha
 }
 
 type HandlerBuilder interface {
-	Build(conf map[string]interface{}) Handler
+	Build(conf map[string]interface{}) (Handler, error)
 }
 
 // HandlerBuilderFunc type is an adapter to allow the use of ordinary functions as handler builders.
 // If f is a function with the appropriate signature, HandlerBuilderFunc(f) is a HandlerBuilder that calls f.
-type HandlerBuilderFunc func(conf map[string]interface{}) Handler
+type HandlerBuilderFunc func(conf map[string]interface{}) (Handler, error)
 
 // Build calls f(conf).
-func (f HandlerBuilderFunc) Build(conf map[string]interface{}) Handler {
+func (f HandlerBuilderFunc) Build(conf map[string]interface{}) (Handler, error) {
 	return f(conf)
 }
 

@@ -65,7 +65,8 @@ func (parallel Parallel) Handle(ctx context.Context, reqRes *HandleRes) (respRes
 			Status: HandleStatusFailed,
 			Meta:   reqRes.Meta,
 			Data:   reses,
-		}, errors.New("errs: " + strings.Join(errs, ","))
+		}, ErrHandleFailed("", errors.New("errs: "+strings.Join(errs, ",")))
+
 	}
 
 	return &HandleRes{
