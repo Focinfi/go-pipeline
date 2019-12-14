@@ -68,7 +68,7 @@ func NewSinglePipe(conf PipeConf, handlerBuilders HandlerBuilderGetter, handlers
 	}
 
 	if conf.RefHandlerID != "" {
-		if handler, ok := handlers.GetOK(conf.RefHandlerID); !ok {
+		if handler, ok := handlers.GetHandlerOK(conf.RefHandlerID); !ok {
 			return nil, ErrRefHandlerNotFound(conf.RefHandlerID)
 		} else {
 			pipe.Handler = handler
@@ -76,7 +76,7 @@ func NewSinglePipe(conf PipeConf, handlerBuilders HandlerBuilderGetter, handlers
 		}
 	}
 
-	builder, ok := handlerBuilders.GetOK(conf.HandlerBuilderName)
+	builder, ok := handlerBuilders.GetHandlerBuilderOK(conf.HandlerBuilderName)
 	if !ok {
 		return nil, ErrHandlerBuilderNotFound(conf.HandlerBuilderName)
 	}

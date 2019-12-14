@@ -62,25 +62,25 @@ func (f HandlerBuilderFunc) Build(conf map[string]interface{}) (Handler, error) 
 }
 
 type HandlerBuilderGetter interface {
-	GetOK(id string) (HandlerBuilder, bool)
+	GetHandlerBuilderOK(id string) (HandlerBuilder, bool)
 }
 
 // MapHandlerBuilderGetter wraps a map[string]HandlerBuilder as a MapHandlerBuilderGetter.
 type MapHandlerBuilderGetter map[string]HandlerBuilder
 
-func (m MapHandlerBuilderGetter) GetOK(id string) (HandlerBuilder, bool) {
+func (m MapHandlerBuilderGetter) GetHandlerBuilderOK(id string) (HandlerBuilder, bool) {
 	builder, ok := m[id]
 	return builder, ok
 }
 
 type HandlerGetter interface {
-	GetOK(name string) (Handler, bool)
+	GetHandlerOK(name string) (Handler, bool)
 }
 
 // MapHandlerGetter wraps a map[string]Handler as a MapHandlerGetter.
 type MapHandlerGetter map[string]Handler
 
-func (m MapHandlerGetter) GetOK(name string) (Handler, bool) {
+func (m MapHandlerGetter) GetHandlerOK(name string) (Handler, bool) {
 	handler, ok := m[name]
 	return handler, ok
 }
