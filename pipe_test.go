@@ -2,6 +2,7 @@ package pipeline
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -75,10 +76,11 @@ func TestNewSinglePipe(t *testing.T) {
 		{
 			caseName: "unvalidated conf",
 			pc: PipeConf{
+				Desc:     "negative-timeout",
 				Timeout:  -1,
 				Required: false,
 			},
-			err: ErrPipeConfTimeoutLessThanOrEqualToZero,
+			err: fmt.Errorf("negative-timeout: %w", ErrPipeConfTimeoutLessThanOrEqualToZero),
 		},
 		{
 			caseName: "ref handler id not found",
@@ -87,7 +89,7 @@ func TestNewSinglePipe(t *testing.T) {
 				Required:     true,
 				RefHandlerID: "not_found",
 			},
-			err: ErrRefHandlerNotFound("not_found"),
+			err: fmt.Errorf("not_found: %w", ErrRefHandlerNotFound),
 		},
 		{
 			caseName: "handler builder name not found",
@@ -96,7 +98,7 @@ func TestNewSinglePipe(t *testing.T) {
 				Required:           true,
 				HandlerBuilderName: "not_found",
 			},
-			err: ErrHandlerBuilderNotFound("not_found"),
+			err: fmt.Errorf("not_found: %w", ErrHandlerBuilderNotFound),
 		},
 		{
 			caseName: "normal by handler builder",
@@ -252,7 +254,7 @@ func TestSinglePipe_Handle(t *testing.T) {
 			},
 			res: HandleRes{
 				Status:  HandleStatusTimeout,
-				Message: ErrHandleTimeout("slow", 500).Error(),
+				Message: MakeErrHandleTimeout("slow", 500).Error(),
 				Data:    -1,
 			},
 			hasErr: false,

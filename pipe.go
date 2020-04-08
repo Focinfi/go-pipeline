@@ -2,6 +2,8 @@ package pipeline
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"time"
 )
 
@@ -59,7 +61,7 @@ func NewSinglePipes(confs []PipeConf, handlerBuilders HandlerBuilderGetter, hand
 
 func NewSinglePipe(conf PipeConf, handlerBuilders HandlerBuilderGetter, handlers HandlerGetter) (*Pipe, error) {
 	if err := conf.Validate(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("%s: %w", conf.Desc, err)
 	}
 
 	pipe := &Pipe{
@@ -69,7 +71,7 @@ func NewSinglePipe(conf PipeConf, handlerBuilders HandlerBuilderGetter, handlers
 
 	if conf.RefHandlerID != "" {
 		if handler, ok := handlers.GetHandlerOK(conf.RefHandlerID); !ok {
-			return nil, ErrRefHandlerNotFound(conf.RefHandlerID)
+			return nil, fmt.Errorf("%s: %w", conf.RefHandlerID, ErrRefHandlerNotFound)
 		} else {
 			pipe.Handler = handler
 			return pipe, nil
@@ -78,11 +80,11 @@ func NewSinglePipe(conf PipeConf, handlerBuilders HandlerBuilderGetter, handlers
 
 	builder, ok := handlerBuilders.GetHandlerBuilderOK(conf.HandlerBuilderName)
 	if !ok {
-		return nil, ErrHandlerBuilderNotFound(conf.HandlerBuilderName)
+		return nil, fmt.Errorf("%s: %w", conf.HandlerBuilderName, ErrHandlerBuilderNotFound)
 	}
 	handler, err := builder.Build(conf.HandlerBuilderConf)
 	if err != nil {
-		return nil, ErrBuildHandlerFailed(conf.HandlerBuilderName, err)
+		return nil, fmt.Errorf("%s: %w: %v", conf.HandlerBuilderName, ErrBuildHandlerFailed, err)
 	}
 	pipe.Handler = handler
 	return pipe, nil
@@ -128,21 +130,21 @@ func (pipe Pipe) Handle(ctx context.Context, reqRes *HandleRes) (respRes *Handle
 		err = resp.err
 		respRes = resp.res
 	case <-time.After(time.Millisecond * time.Duration(pipe.Conf.Timeout)):
-		err = ErrHandleTimeout(pipe.Conf.Desc, pipe.Conf.Timeout)
+		err = MakeErrHandleTimeout(pipe.Conf.Desc, pipe.Conf.Timeout)
 	}
 
 	// assign status
 	status := HandleStatusOK
 	if err != nil {
 		status = HandleStatusFailed
-		if e, ok := err.(Error); ok && e.Is(ErrorTypeHandleTimeout) {
+		if errors.Is(err, ErrHandleTimeout) {
 			status = HandleStatusTimeout
 		}
 	}
 
 	// fatal when required and non-nil err
 	if pipe.Conf.Required && err != nil {
-		e := ErrHandleFailed(pipe.Conf.Desc, err)
+		e := fmt.Errorf("%s: %w: %v", pipe.Conf.Desc, ErrHandleFailed, err)
 		return &HandleRes{
 			Status:  status,
 			Message: e.Error(),

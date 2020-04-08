@@ -132,7 +132,7 @@ func TestLine_Handle(t *testing.T) {
 			res: HandleRes{
 				Status: HandleStatusTimeout,
 			},
-			err: ErrHandleTimeout("slow", 200),
+			err: MakeErrHandleTimeout("slow", 200),
 		},
 	}
 

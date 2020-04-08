@@ -2,7 +2,6 @@ package pipeline
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strings"
 	"sync"
@@ -65,8 +64,7 @@ func (parallel Parallel) Handle(ctx context.Context, reqRes *HandleRes) (respRes
 			Status: HandleStatusFailed,
 			Meta:   reqRes.Meta,
 			Data:   reses,
-		}, ErrHandleFailed("", errors.New("errs: "+strings.Join(errs, ",")))
-
+		}, fmt.Errorf("%w: errs: %v", ErrHandleFailed, strings.Join(errs, ","))
 	}
 
 	return &HandleRes{
